@@ -1,4 +1,4 @@
-class autobuntu::apps::motd {
+class autobuntu::system::motd {
   tag('provisioning')
   
   file { "/etc/update-motd.d/10-help-text":
