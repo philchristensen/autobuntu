@@ -12,7 +12,7 @@ class autobuntu::system::openvpn {
     ensure => directory
   }->
   
-  file { "/etc/openvpn/easy-rsa/vars"
+  file { "/etc/openvpn/easy-rsa/vars":
     ensure => file,
     content => template("autobuntu/system/openvpn/vars.sh.erb")
   }
