@@ -1,4 +1,4 @@
-define autobuntu::languages::python::pip::package(
+define autobuntu::development::python::pip::package(
   $package = $name,
   $ensure = "present",
   $index_url = nil,
@@ -6,10 +6,10 @@ define autobuntu::languages::python::pip::package(
   $pip_path
 ){
   if($index_url != nil){
-    $index_url_switch = "--use-mirrors --index-url=${index_url}"
+    $index_url_switch = "--index-url=${index_url}"
   }
   else {
-    $index_url_switch = '--use-mirrors'
+    $index_url_switch = ''
   }
 
   if ($pip_cache_dir != nil){
@@ -52,7 +52,7 @@ define autobuntu::languages::python::pip::package(
   }
 }
 
-define autobuntu::languages::python::pip::requirements(
+define autobuntu::development::python::pip::requirements(
   $pip_path,
   $requirements = $name,
   $ensure = "present",
