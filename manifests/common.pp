@@ -35,5 +35,5 @@ class autobuntu::common {
   include autobuntu::apps::ntp
   include autobuntu::apps::postfix
 
-  include autobuntu::languages::python
+  include autobuntu::development::python
 }
