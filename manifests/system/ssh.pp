@@ -8,7 +8,7 @@ class autobuntu::system::ssh(
   
   augeas { "sshd-config":
     context => "/files/etc/ssh/sshd_config",
-    changes => ["set PasswordAuthentication ${ssh_password_auth}"],
+    changes => ["set PasswordAuthentication ${password_auth}"],
     notify => Service['ssh']
   }
 
