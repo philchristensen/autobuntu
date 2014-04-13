@@ -1,8 +1,5 @@
 # Standard resources to be installed on *every* machine managed by Puppet.
-class autobuntu::common(
-  $short_label,
-  $domain
-){
+class autobuntu::common {
   tag('provisioning')
 
   require autobuntu::system::apt
