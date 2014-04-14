@@ -1,4 +1,4 @@
-class autobuntu::jenkins {
+class autobuntu::development::jenkins {
   tag('provisioning')
 
   include apt
