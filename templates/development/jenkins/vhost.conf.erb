@@ -1,14 +1,14 @@
-NameVirtualHost <%= vhost_name %>:<%= port %>
-<VirtualHost <%= vhost_name %>:<%= port %>>
-	ServerName <%= srvname %>
+NameVirtualHost <%= @vhost_name %>:<%= @port %>
+<VirtualHost <%= @vhost_name %>:<%= @port %>>
+	ServerName <%= @srvname %>
 <% if serveradmin %>
-	ServerAdmin <%= serveradmin %>
+	ServerAdmin <%= @serveradmin %>
 <% end %>
 <% serveraliases.each do |name| -%><%= "	ServerAlias #{name}\n" %><% end -%>
 
-	DocumentRoot <%= docroot %>
-	<Directory <%= docroot %>>
-		Options <%= options %>
+	DocumentRoot <%= @docroot %>
+	<Directory <%= @docroot %>>
+		Options <%= @options %>
 		AllowOverride <%= Array(override).join(' ') %>
 		Order allow,deny
 		allow from all
@@ -30,12 +30,12 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 		ProxyPass / http://localhost:8080/
 		ProxyPassReverse / http://localhost:8080/
 	<% else %>
-		Redirect / https://<%= srvname %>/
+		Redirect / https://<%= @srvname %>/
 	<% end %>
 
-	ErrorLog <%= logroot %>/<%= name %>_error.log
+	ErrorLog <%= @logroot %>/<%= @name %>_error.log
 	LogLevel warn
-	CustomLog <%= logroot %>/<%= name %>_access.log combined
+	CustomLog <%= @logroot %>/<%= @name %>_access.log combined
 	ServerSignature Off
 </VirtualHost>
 
