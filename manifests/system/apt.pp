@@ -2,9 +2,9 @@ class autobuntu::system::apt {
   include apt
   include apt::update
 
-  file { "/etc/apt/sources.list.d":
-    ensure => directory
-  }
+  # file { "/etc/apt/sources.list.d":
+  #   ensure => directory
+  # }
 
   apt::source { "ubuntu_archiv_precise":
     location        => "http://us-east-1.ec2.archive.ubuntu.com/ubuntu",
