@@ -1,6 +1,6 @@
 class autobuntu::network::bind9(
-  $options_template = 'autobuntu/network/bind9/named.conf.local.erb',
-  $local_template = 'autobuntu/network/bind9/named.conf.options.erb',
+  $options_template = nil,
+  $local_template = nil
 ){
   tag('provisioning')
 
