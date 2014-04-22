@@ -1,4 +1,4 @@
-class autobuntu::bind9(
+class autobuntu::network::bind9(
   $options_template = 'autobuntu/network/named.conf.local.erb',
   $local_template =  'autobuntu/network/named.conf.options.erb',
 ){
