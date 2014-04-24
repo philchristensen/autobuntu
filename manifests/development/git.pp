@@ -6,7 +6,7 @@ class autobuntu::development::git {
   }
 }
 
-define autobuntu::development::git::checkout($dirname, $url, $path, $branch='master', $revision='', $manage_working_dir=true, $owner='root', $group='root', $mode='0755', $hard=false, $force=true, $shallow=false) {
+define autobuntu::development::git::checkout($dirname, $url, $path, $branch='master', $revision='', $manage_working_dir=true, $owner='root', $group='root', $mode='0755', $hard=false, $force=true, $shallow=false, $envvars='') {
   ###
   # required args
   # @dirname: directory to check out into
@@ -50,6 +50,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
   exec { "clone/${url}:${checkout_path}":
     command => "git clone --branch ${branch} ${url} ${dirname}",
     timeout => 0,
+    environment => $envvars,
     cwd => $path,
     creates => "${checkout_path}/.git",
     user => $owner,
@@ -67,6 +68,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
     exec { "check-remote/${url}:${checkout_path}":
       command => "git remote set-url origin ${url}",
       timeout => 0,
+      environment => $envvars,
       cwd => "${checkout_path}",
       user => $owner,
       group => $group,
@@ -81,6 +83,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
     exec { "fetch/${url}:${checkout_path}":
       command => "git fetch --all",
       timeout => 0,
+      environment => $envvars,
       cwd => "${checkout_path}",
       user => $owner,
       group => $group,
@@ -92,6 +95,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
     exec { "pull/${url}:${checkout_path}":
       command => "git reset --hard origin/${branch}",
       timeout => 0,
+      environment => $envvars,
       cwd => "${checkout_path}",
       user => $owner,
       group => $group,
@@ -109,6 +113,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
     exec { "clean/${url}:${checkout_path}":
       command => "git clean ${clean_flags}",
       timeout => 0,
+      environment => $envvars,
       cwd => "${checkout_path}",
       user => $owner,
       group => $group,
@@ -123,6 +128,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
     exec { "pull/${url}:${checkout_path}":
       command => "git pull origin ${branch}",
       timeout => 0,
+      environment => $envvars,
       cwd => "${checkout_path}",
       user => $owner,
       group => $group,
@@ -137,6 +143,7 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
     exec { "checkout/${url}/${revision}/${checkout_path}":
       command => "git checkout ${revision}",
       timeout => 0,
+      environment => $envvars,
       cwd => "${checkout_path}",
       user => $owner,
       group => $group,
