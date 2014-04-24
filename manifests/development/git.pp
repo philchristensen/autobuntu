@@ -26,6 +26,8 @@ define autobuntu::development::git::checkout($dirname, $url, $path, $branch='mas
   #        If 'ignore' even ignored files are trashed.
   # @force: do a clone/checkout even if nothing about the repo has changed
   require autobuntu::development::git
+  
+  notify { "$envvars": }
 
   $checkout_path = "${path}/${dirname}"
   $unless_git = "/bin/bash -c '[[ -e ${checkout_path}/.git ]] && [[ $([[ -n \"${revision}\" ]] && echo \"${revision}\" || git --git-dir=${checkout_path}/.git ls-remote --heads origin ${branch} | cut -f1) == \"$(git --git-dir=${checkout_path}/.git rev-parse HEAD)\" ]]'"
