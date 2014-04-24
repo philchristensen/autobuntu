@@ -32,7 +32,7 @@ class autobuntu::development::gitolite {
     owner => "git",
     group => "git",
     mode => "0775",
-    source => "puppet:///modules/autobuntu/development/gitolite/gitconfig.ini",
+    content=> template("autobuntu/development/gitolite/gitconfig.ini.erb"),
   }
 
   file { "/var/git/.bashrc":
