@@ -38,23 +38,3 @@ recipient_delimiter = +
 inet_interfaces = all
 
 
-<% if @relayhost %>
-relayhost = [<%= @relayhost %>]:587
-smtp_connection_cache_destinations = <%= @relayhost %>
-debug_peer_list=<%= @relayhost %>
-debug_peer_level=3
-<% end %>
-
-<% if @postfix_sasl_source %>
-smtpd_sasl_path = smtpd
-smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd
-smtp_sasl_auth_enable = yes
-smtp_sasl_security_options =
-<% end %>
-
-# list of CAs to trust when verifying server certificate
-smtp_sasl_tls_security_options = noanonymous
-smtp_use_tls=yes
-smtpd_tls_auth_only = yes
-smtp_tls_CApath = /etc/ssl/certs
-smtp_sasl_tls_security_options =  noanonymous
