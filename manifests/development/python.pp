@@ -1,4 +1,6 @@
 class autobuntu::development::python {
+  tag('provisioning')
+  
   package { ["python", "python-dev", "python-pip", "python-virtualenv"]:
     ensure => present
   }
