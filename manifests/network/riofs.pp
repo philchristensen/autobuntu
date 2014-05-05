@@ -9,7 +9,7 @@ class autobuntu::network::riofs {
   }->
   
   staging::file { "riosfs-0.6.tar.gz":
-    source => "https://github.com/skoobe/riofs/archive/0.6.tar.gz"
+    source => "https://github.com/skoobe/riofs/archive/v0.6.tar.gz"
   }->
   
   staging::extract { "riofs-0.6.tar.gz":
