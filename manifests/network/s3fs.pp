@@ -32,7 +32,8 @@ class autobuntu::network::s3fs {
   exec { "s3fs-make":
     cwd => "/opt/s3fs/s3fs-fuse-master",
     command => "/usr/bin/make",
-    creates => "/opt/s3fs/s3fs-fuse-master/src/s3fs"
+    creates => "/opt/s3fs/s3fs-fuse-master/src/s3fs",
+    timeout => 0
   }->
   
   exec { "s3fs-make-install":
