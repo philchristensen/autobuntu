@@ -8,13 +8,13 @@ class autobuntu::network::riofs {
     ensure => directory
   }->
   
-  staging::file { "riosfs-0.6.tar.gz":
+  staging::file { "riosfs-v0.6.tar.gz":
     source => "https://github.com/skoobe/riofs/archive/v0.6.tar.gz"
   }->
   
   staging::extract { "riofs-v0.6.tar.gz":
     target => "/opt/riofs",
-    creates => "/opt/riofs/riofs-0.6",
+    creates => "/opt/riofs/riofs-v0.6",
   }->
   
   exec { "riofs-autogen":
