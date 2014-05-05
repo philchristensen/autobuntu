@@ -14,30 +14,30 @@ class autobuntu::network::riofs {
   
   staging::extract { "riofs-v0.6.tar.gz":
     target => "/opt/riofs",
-    creates => "/opt/riofs/riofs-v0.6",
+    creates => "/opt/riofs/riofs-0.6",
   }->
   
   exec { "riofs-autogen":
-    cwd => "/opt/riofs/riofs-v0.6",
-    command => "/opt/riofs/riofs-v0.6/autogen.sh",
-    creates => "/opt/riofs/riofs-v0.6/configure"
+    cwd => "/opt/riofs/riofs-0.6",
+    command => "/opt/riofs/riofs-0.6/autogen.sh",
+    creates => "/opt/riofs/riofs-0.6/configure"
   }->
   
   exec { "riofs-configure":
-    cwd => "/opt/riofs/riofs-v0.6",
-    command => "/opt/riofs/riofs-v0.6/configure",
-    creates => "/opt/riofs/riofs-v0.6/config.status"
+    cwd => "/opt/riofs/riofs-0.6",
+    command => "/opt/riofs/riofs-0.6/configure",
+    creates => "/opt/riofs/riofs-0.6/config.status"
   }->
   
   exec { "riofs-make":
-    cwd => "/opt/riofs/riofs-v0.6",
+    cwd => "/opt/riofs/riofs-0.6",
     command => "/usr/bin/make",
-    creates => "/opt/riofs/riofs-v0.6/src/riofs",
+    creates => "/opt/riofs/riofs-0.6/src/riofs",
     timeout => 0
   }->
   
   exec { "riofs-make-install":
-    cwd => "/opt/riofs/riofs-v0.6",
+    cwd => "/opt/riofs/riofs-0.6",
     command => "/usr/bin/make install",
     creates => "/usr/local/bin/riofs"
   }
