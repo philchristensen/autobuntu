@@ -15,5 +15,29 @@ class autobuntu::network::s3fs {
   staging::extract { "s3fs-latest.zip":
     target => "/opt/s3fs",
     creates => "/opt/s3fs/s3fs-fuse-master",
+  }->
+  
+  exec { "s3fs-autogen":
+    cwd => "/opt/s3fs/s3fs-fuse-master",
+    command => "/opt/s3fs/s3fs-fuse-master/autogen.sh",
+    creates => "/opt/s3fs/s3fs-fuse-master/configure"
+  }->
+  
+  exec { "s3fs-configure":
+    cwd => "/opt/s3fs/s3fs-fuse-master",
+    command => "/opt/s3fs/s3fs-fuse-master/configure",
+    creates => "/opt/s3fs/s3fs-fuse-master/config.status"
+  }->
+  
+  exec { "s3fs-make":
+    cwd => "/opt/s3fs/s3fs-fuse-master",
+    command => "/usr/bin/make",
+    creates => "/opt/s3fs/s3fs-fuse-master/src/s3fs"
+  }->
+  
+  exec { "s3fs-make-install":
+    cwd => "/opt/s3fs/s3fs-fuse-master",
+    command => "/usr/bin/make install",
+    creates => "/usr/local/bin/s3fs"
   }
 }
