@@ -4,6 +4,10 @@ class autobuntu::network::s3fs {
    ensure => present
   }->
   
+  file { "/opt/s3fs":
+    ensure => directory
+  }->
+  
   staging::file { "s3fs-latest.zip":
     source => "https://github.com/s3fs-fuse/s3fs-fuse/archive/master.zip"
   }->
