@@ -1,4 +1,6 @@
 class autobuntu::development::python {
+  tag('provisioning')
+  
   package { ["python", "python-dev", "python-pip", "python-virtualenv"]:
     ensure => present
   }
@@ -29,7 +31,7 @@ define autobuntu::development::python::virtualenv($basename, $location) {
     require => Package["python-virtualenv"]
   }->
 
-  wt::pip::package { "distribute/${location}/${name}":
+  autobuntu::development::python::pip::package { "distribute/${location}/${name}":
     ensure => present,
     package => "distribute",
     pip_path => "${location}/${basename}/bin/pip",
