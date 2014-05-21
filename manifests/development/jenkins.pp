@@ -73,13 +73,5 @@ class autobuntu::development::jenkins {
     owner => "jenkins",
     group => "nogroup",
     mode => "0700"
-  }->
-
-  file { "jenkins-ssh-config":
-    path => "/var/lib/jenkins/.ssh/config",
-    source => "puppet:///modules/autobuntu/development/jenkins/ssh_config",
-    owner => "jenkins",
-    group => "nogroup",
-    mode => "0700"
   }
 }
