@@ -1,4 +1,4 @@
-class autobunto::network::sphinxsearch {
+class autobuntu::network::sphinxsearch {
   apt::ppa { 'ppa:builds/sphinxsearch-rel21': }->
   
   package { "sphinxsearch":
