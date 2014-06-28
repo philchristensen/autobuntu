@@ -1,4 +1,8 @@
 class autobuntu::stats::graphite(){
+  file { "/opt/graphite":
+    ensure => directory
+  }->
+  
   autobuntu::development::python::virtualenv {"graphite-virtualenv":
     basename => "virtualenv",
     location => "/opt/graphite"
