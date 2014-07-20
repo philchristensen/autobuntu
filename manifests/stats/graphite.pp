@@ -59,7 +59,7 @@ class autobuntu::stats::graphite(){
 
   autobuntu::development::python::django::syncdb { "graphite-syncdb":
     pythonpath => "/opt/graphite/virtualenv/bin/python",
-    projectpath => "/opt/graphite"
+    projectpath => "/opt/graphite/webapp/graphite"
   }->
   
   file { "graphite-wsgi":
