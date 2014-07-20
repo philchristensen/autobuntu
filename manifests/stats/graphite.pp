@@ -51,7 +51,7 @@ class autobuntu::stats::graphite(){
   
   file { "graphite-wsgi":
     ensure => file,
-    path => "/opt/graphite/current/conf/graphite.wsgi.py",
+    path => "/opt/graphite/conf/graphite.wsgi.py",
     content => template("autobuntu/stats/graphite/wsgi.py.erb"),
     owner => 'root',
     group => 'staff'

@@ -35,8 +35,8 @@ NameVirtualHost <%= @vhost_name %>:<%= @port %>
   WSGIApplicationGroup dramstats
   WSGIProcessGroup dramstats
   WSGIDaemonProcess dramstats display-name=dramstats python-path=/opt/graphite/virtualenv/lib/python2.7/site-packages
-  WSGIImportScript /opt/graphite/current/conf/graphite.wsgi.py application-group=dramstats process-group=dramstats
-  WSGIScriptAlias / /opt/graphite/current/conf/graphite.wsgi.py
+  WSGIImportScript /opt/graphite/conf/graphite.wsgi.py application-group=dramstats process-group=dramstats
+  WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi.py
 
   ErrorLog <%= @logroot %>/<%= @name %>_error.log
   LogLevel warn
