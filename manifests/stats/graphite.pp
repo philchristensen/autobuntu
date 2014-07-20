@@ -36,9 +36,33 @@ class autobuntu::stats::graphite(){
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
+  autobuntu::development::python::pip::package { "graphite-zope-interface":
+    ensure => present,
+    package => "zope.interface",
+    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
+  autobuntu::development::python::pip::package { "graphite-twisted":
+    ensure => present,
+    package => "twisted",
+    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
+  autobuntu::development::python::pip::package { "graphite-txamqp":
+    ensure => present,
+    package => "txamqp",
+    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
   autobuntu::development::python::pip::package { "graphite-django":
     ensure => present,
     package => "django",
+    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
+  autobuntu::development::python::pip::package { "graphite-django-tagging":
+    ensure => present,
+    package => "django-tagging",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
@@ -59,6 +83,14 @@ class autobuntu::stats::graphite(){
     ensure => file,
     path => "/opt/graphite/conf/carbon.conf",
     content => template("autobuntu/stats/graphite/carbon.conf.erb"),
+    owner => 'root',
+    group => 'staff'
+  }->
+
+  file { "graphite-carbon-storage-schemas":
+    ensure => file,
+    path => "/opt/graphite/conf/storage-schemas.conf",
+    content => template("autobuntu/stats/graphite/storage-schemas.conf.erb"),
     owner => 'root',
     group => 'staff'
   }->
