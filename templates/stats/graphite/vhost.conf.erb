@@ -13,7 +13,25 @@ NameVirtualHost <%= @vhost_name %>:<%= @port %>
     Order allow,deny
     allow from all
   </Directory>
+  
+  Alias /content/ /opt/graphite/webapp/content/
+  <Location "/content/">
+    SetHandler None
+  </Location>
 
+  # In order for the django admin site media to work
+  Alias /media/ "/opt/graphite/virtualenv/lib/python2.7/site-packages/django/contrib/admin/media/"
+  <Location "/media/">
+    SetHandler None
+  </Location>
+
+  # The graphite.wsgi file has to be accessible by apache. It won't
+  # be visible to clients because of the DocumentRoot though.
+  <Directory /opt/graphite/conf/>
+    Order deny,allow
+    Allow from all
+  </Directory>
+  
   WSGIApplicationGroup dramstats
   WSGIProcessGroup dramstats
   WSGIDaemonProcess dramstats display-name=dramstats python-path=/opt/graphite/virtualenv/lib/python2.7/site-packages

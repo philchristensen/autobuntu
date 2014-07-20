@@ -2,7 +2,9 @@ class autobuntu::stats::statsd(){
   include nodejs
   
   file { "/opt/statsd":
-    ensure => directory
+    ensure => directory,
+    owner => 'root',
+    group => 'staff'
   }->
   
   autobuntu::development::git::checkout { "statsd":
@@ -14,5 +16,7 @@ class autobuntu::stats::statsd(){
   file { "/opt/statsd/current/config.js":
     ensure => file,
     source => "puppet:///modules/autobuntu/stats/statsd/config.js",
+    owner => 'root',
+    group => 'staff'
   }
 }

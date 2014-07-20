@@ -2,7 +2,9 @@ class autobuntu::stats::graphite(){
   include apache
   
   file { "/opt/graphite":
-    ensure => directory
+    ensure => directory,
+    owner => 'root',
+    group => 'staff'
   }->
   
   autobuntu::development::python::virtualenv {"graphite-virtualenv":
@@ -40,10 +42,19 @@ class autobuntu::stats::graphite(){
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
+  file { "graphite-logs":
+    ensure => directory,
+    path => "/opt/graphite/storage/logs/webapp",
+    owner => 'www-data',
+    group => 'staff'
+  }->
+  
   file { "graphite-wsgi":
     ensure => file,
     path => "/opt/graphite/current/conf/graphite.wsgi.py",
-    content => template("autobuntu/stats/graphite/wsgi.py.erb")
+    content => template("autobuntu/stats/graphite/wsgi.py.erb"),
+    owner => 'root',
+    group => 'staff'
   }->
   
   apache::vhost { 'stats.dramonline.net':
