@@ -44,7 +44,7 @@ class autobuntu::stats::graphite(){
   
   file { "graphite-logs":
     ensure => directory,
-    path => "/opt/graphite/storage/logs/webapp",
+    path => "/opt/graphite/storage/log/webapp",
     owner => 'www-data',
     group => 'staff'
   }->
