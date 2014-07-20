@@ -54,6 +54,12 @@ class autobuntu::stats::graphite(){
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
+  autobuntu::development::python::pip::package { "graphite-psycopg2":
+    ensure => present,
+    package => "psycopg2",
+    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
   autobuntu::development::python::pip::package { "graphite-django":
     ensure => present,
     package => "django",
