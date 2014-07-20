@@ -56,7 +56,7 @@ class autobuntu::stats::graphite(){
   
   autobuntu::development::python::pip::package { "graphite-mysqldb":
     ensure => present,
-    package => "python-mysql",
+    package => "mysql-python",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
