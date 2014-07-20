@@ -1,4 +1,6 @@
 class autobuntu::stats::graphite(){
+  include apache
+  
   file { "/opt/graphite":
     ensure => directory
   }->
@@ -36,5 +38,23 @@ class autobuntu::stats::graphite(){
     ensure => present,
     package => "graphite-web",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
+  file { "graphite-wsgi":
+    ensure => file,
+    path => "/opt/graphite/current/conf/graphite.wsgi.py",
+    content => template("autobuntu/stats/graphite/wsgi.py.erb")
+  }->
+  
+  apache::vhost { 'stats.dramonline.net':
+    priority => "10",
+    vhost_name => $ipaddress,
+    servername => 'stats.dramonline.net',
+    ssl => false,
+    port => "80",
+    template => 'autobuntu/stats/graphite/vhost.conf.erb',
+    docroot => "/var/www/"
   }
+  
+
 }

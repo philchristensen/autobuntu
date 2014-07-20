@@ -1,0 +1,30 @@
+NameVirtualHost <%= @vhost_name %>:<%= @port %>
+<VirtualHost <%= @vhost_name %>:<%= @port %>>
+  ServerName <%= @srvname %>
+<% if @serveradmin %>
+  ServerAdmin <%= @serveradmin %>
+<% end %>
+<% @serveraliases.each do |name| -%><%= " ServerAlias #{name}\n" %><% end -%>
+
+  DocumentRoot <%= @docroot %>
+  <Directory <%= @docroot %>>
+    Options <%= @options %>
+    AllowOverride <%= Array(@override).join(' ') %>
+    Order allow,deny
+    allow from all
+  </Directory>
+
+  WSGIApplicationGroup dramstats
+  WSGIProcessGroup dramstats
+  WSGIDaemonProcess dramstats display-name=dramstats python-path=/opt/graphite/virtualenv/lib/python2.7/site-packages
+  WSGIImportScript /opt/graphite/current/conf/graphite.wsgi.py application-group=dramstats process-group=dramstats
+  WSGIScriptAlias / /opt/graphite/current/conf/graphite.wsgi.py
+
+  ErrorLog <%= @logroot %>/<%= @name %>_error.log
+  LogLevel warn
+  CustomLog <%= @logroot %>/<%= @name %>_access.log combined
+  ServerSignature Off
+</VirtualHost>
+
+
+
