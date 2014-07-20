@@ -49,6 +49,19 @@ class autobuntu::stats::graphite(){
     group => 'staff'
   }->
   
+  file { "graphite-carbon-conf":
+    ensure => file,
+    path => "/opt/graphite/conf/carbon.conf",
+    content => template("autobuntu/stats/graphite/carbon.conf.erb"),
+    owner => 'root',
+    group => 'staff'
+  }->
+
+  autobuntu::development::python::django::syncdb { "graphite-syncdb":
+    pythonpath => "/opt/graphite/virtualenv/bin/python",
+    projectpath => "/opt/graphite"
+  }->
+  
   file { "graphite-wsgi":
     ensure => file,
     path => "/opt/graphite/conf/graphite.wsgi.py",
