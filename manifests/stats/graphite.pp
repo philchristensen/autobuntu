@@ -94,6 +94,15 @@ class autobuntu::stats::graphite(){
     group => 'staff'
   }->
 
+  file { "graphite-carbon-init":
+    ensure => file,
+    path => "/etc/init.d/carbon-cache",
+    source => "puppet:///modules/autobuntu/stats/graphite/init.sh",
+    owner => 'root',
+    group => 'staff',
+    mode => 0755
+  }->
+
   file { "graphite-carbon-storage-schemas":
     ensure => file,
     path => "/opt/graphite/conf/storage-schemas.conf",
