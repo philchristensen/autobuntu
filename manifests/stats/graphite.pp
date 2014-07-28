@@ -91,7 +91,8 @@ class autobuntu::stats::graphite(){
     path => "/opt/graphite/conf/carbon.conf",
     content => template("autobuntu/stats/graphite/carbon.conf.erb"),
     owner => 'root',
-    group => 'staff'
+    group => 'staff',
+    notify => Service['carbon-cache']
   }->
 
   file { "graphite-carbon-init":
@@ -100,7 +101,8 @@ class autobuntu::stats::graphite(){
     source => "puppet:///modules/autobuntu/stats/graphite/init.sh",
     owner => 'root',
     group => 'staff',
-    mode => 0755
+    mode => 0755,
+    notify => Service['carbon-cache']
   }->
 
   file { "graphite-carbon-storage-schemas":
@@ -134,5 +136,8 @@ class autobuntu::stats::graphite(){
     docroot => "/var/www/"
   }
   
-
+  service { "carbon-cache":
+    ensure => running,
+    enable => true
+  }
 }
