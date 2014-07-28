@@ -61,7 +61,7 @@ class autobuntu::stats::graphite(){
   }->
   
   autobuntu::development::python::pip::package { "graphite-django":
-    ensure => present,
+    ensure => "1.5.8",
     package => "django",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
