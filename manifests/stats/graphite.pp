@@ -43,7 +43,7 @@ class autobuntu::stats::graphite(){
   }->
   
   autobuntu::development::python::pip::package { "graphite-twisted":
-    ensure => present,
+    ensure => "11.1.0",
     package => "twisted",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
