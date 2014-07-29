@@ -39,6 +39,12 @@ class autobuntu::stats::graphite(
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
+  autobuntu::development::python::pip::package { "graphite-cairo":
+    ensure => present,
+    package => "cairo",
+    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
   autobuntu::development::python::pip::package { "graphite-zope-interface":
     ensure => present,
     package => "zope.interface",
