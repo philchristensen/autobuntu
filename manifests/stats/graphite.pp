@@ -4,6 +4,10 @@ class autobuntu::stats::graphite(
 ){
   include apache
   
+  package { ["libcairo2", "libcairo2-dev"]:
+    ensure => present
+  }->
+  
   file { "/opt/graphite":
     ensure => directory,
     owner => 'root',
