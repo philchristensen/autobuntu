@@ -41,7 +41,7 @@ class autobuntu::stats::graphite(
   
   autobuntu::development::python::pip::package { "graphite-cairo":
     ensure => present,
-    package => "cairo",
+    package => "pycairo",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
