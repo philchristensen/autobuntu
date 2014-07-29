@@ -1,4 +1,6 @@
-class autobuntu::stats::graphite(){
+class autobuntu::stats::graphite(
+  $carbon_conf_source = "puppet:///modules/autobuntu/stats/graphite/carbon.conf"
+){
   include apache
   
   file { "/opt/graphite":
@@ -89,13 +91,13 @@ class autobuntu::stats::graphite(){
   file { "graphite-carbon-conf":
     ensure => file,
     path => "/opt/graphite/conf/carbon.conf",
-    content => template("autobuntu/stats/graphite/carbon.conf.erb"),
+    source => $carbon_conf_source,
     owner => 'root',
     group => 'staff',
-    notify => Service['carbon-cache']
+    notify => [Service['carbon-cache'], Service['carbon-relay']]
   }->
 
-  file { "graphite-carbon-init":
+  file { "graphite-carbon-cache-init":
     ensure => file,
     path => "/etc/init.d/carbon-cache",
     source => "puppet:///modules/autobuntu/stats/graphite/init.sh",
@@ -103,6 +105,16 @@ class autobuntu::stats::graphite(){
     group => 'staff',
     mode => 0755,
     notify => Service['carbon-cache']
+  }->
+
+  file { "graphite-carbon-relay-init":
+    ensure => file,
+    path => "/etc/init.d/carbon-relay",
+    source => "puppet:///modules/autobuntu/stats/graphite/relay-init.sh",
+    owner => 'root',
+    group => 'staff',
+    mode => 0755,
+    notify => Service['carbon-relay']
   }->
 
   file { "graphite-carbon-storage-schemas":
@@ -137,6 +149,11 @@ class autobuntu::stats::graphite(){
   }
   
   service { "carbon-cache":
+    ensure => running,
+    enable => true
+  }
+  
+  service { "carbon-relay":
     ensure => running,
     enable => true
   }
