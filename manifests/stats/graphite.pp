@@ -1,6 +1,6 @@
 class autobuntu::stats::graphite(
   $carbon_conf_source = "puppet:///modules/autobuntu/stats/graphite/carbon.conf",
-  $relay_rules_source => "puppet:///modules/autobuntu/stats/graphite/relay-rules.conf"
+  $relay_rules_source = "puppet:///modules/autobuntu/stats/graphite/relay-rules.conf"
 ){
   include apache
   
