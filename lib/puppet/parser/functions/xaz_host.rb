@@ -8,7 +8,7 @@ module Puppet::Parser::Functions
     environ = environ || e
     domain = domain || d
     
-    index = (index == 1 ? 2 : 1)
+    index = (index == "1" ? 2 : 1)
     
     return "#{type}#{index}-#{environ}.#{domain}"
   end
