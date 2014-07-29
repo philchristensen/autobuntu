@@ -6,7 +6,7 @@ class autobuntu::development::git {
   }
 }
 
-define autobuntu::development::git::checkout($dirname, $url, $path, $branch='master', $revision='', $manage_working_dir=true, $owner='root', $group='root', $mode='0755', $hard=false, $force=true, $shallow=false, $envvars='_x=') {
+define autobuntu::development::git::checkout($dirname, $url, $path, $branch='master', $revision='', $manage_working_dir=true, $owner='root', $group='root', $mode='0755', $hard=false, $force=true, $shallow=false, $envvars=[]) {
   ###
   # required args
   # @dirname: directory to check out into
