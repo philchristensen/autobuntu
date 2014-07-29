@@ -1,5 +1,6 @@
 class autobuntu::stats::graphite(
-  $carbon_conf_source = "puppet:///modules/autobuntu/stats/graphite/carbon.conf"
+  $carbon_conf_source = "puppet:///modules/autobuntu/stats/graphite/carbon.conf",
+  $relay_rules_source => "puppet:///modules/autobuntu/stats/graphite/relay-rules.conf"
 ){
   include apache
   
@@ -105,6 +106,15 @@ class autobuntu::stats::graphite(
     group => 'staff',
     mode => 0755,
     notify => Service['carbon-cache']
+  }->
+
+  file { "graphite-carbon-relay-rules-conf":
+    ensure => file,
+    path => "/opt/graphite/conf/relay-rules.conf",
+    source => $relay_rules_source,
+    owner => 'root',
+    group => 'staff',
+    notify => Service['carbon-relay']
   }->
 
   file { "graphite-carbon-relay-init":
