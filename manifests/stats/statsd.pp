@@ -37,7 +37,7 @@ class autobuntu::stats::statsd(
   user { "statsd":
     ensure => present,
     system => true,
-    gid => "statsd"
+    gid => "statsd",
     home => "/opt/statsd"
   }
   
