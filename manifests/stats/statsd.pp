@@ -31,7 +31,7 @@ class autobuntu::stats::statsd(
   }
   
   service { "statsd":
-    enable => true,
-    running => true
+    ensure => running,
+    enable => true
   }
 }
