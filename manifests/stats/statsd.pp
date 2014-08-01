@@ -1,5 +1,6 @@
 class autobuntu::stats::statsd(
-  $statsd_conf_source = "puppet:///modules/autobuntu/stats/statsd/config.js"
+  $statsd_conf_source = "puppet:///modules/autobuntu/stats/statsd/config.js",
+  $proxy_conf_source = "puppet:///modules/autobuntu/stats/statsd/proxyConfig.js"
 ){
   include nodejs
   
@@ -22,12 +23,14 @@ class autobuntu::stats::statsd(
     owner => 'root',
     group => 'staff',
     notify => Service['statsd']
-  }
+  }->
   
-  file { "/etc/init/statsd.conf":
+  file { "/opt/statsd/current/proxyConfig.js":
     ensure => file,
-    source => "puppet:///modules/autobuntu/stats/statsd/upstart.conf",
-    notify => Service['statsd']
+    source => $proxy_conf_source,
+    owner => 'root',
+    group => 'staff',
+    notify => Service['statsd-proxy']
   }
   
   group { "statsd":
@@ -41,7 +44,25 @@ class autobuntu::stats::statsd(
     home => "/opt/statsd"
   }
   
+  file { "/etc/init/statsd.conf":
+    ensure => file,
+    source => "puppet:///modules/autobuntu/stats/statsd/statsd-upstart.conf",
+    notify => Service['statsd']
+  }
+  
   service { "statsd":
+    ensure => running,
+    enable => true,
+    require => User['statsd']
+  }
+  
+  file { "/etc/init/statsd-proxy.conf":
+    ensure => file,
+    source => "puppet:///modules/autobuntu/stats/statsd/proxy-upstart.conf",
+    notify => Service['statsd-proxy']
+  }
+  
+  service { "statsd-proxy":
     ensure => running,
     enable => true,
     require => User['statsd']
