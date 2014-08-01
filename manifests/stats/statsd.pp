@@ -32,6 +32,7 @@ class autobuntu::stats::statsd(
   
   service { "statsd":
     ensure => running,
-    enable => true
+    enable => true,
+    provider => upstart
   }
 }
