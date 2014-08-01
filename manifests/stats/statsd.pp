@@ -24,7 +24,7 @@ class autobuntu::stats::statsd(
     notify => Service['statsd']
   }
   
-  file { "/etc/init/statsd":
+  file { "/etc/init/statsd.conf":
     ensure => file,
     source => "puppet:///modules/autobuntu/stats/statsd/upstart.conf",
     notify => Service['statsd']
@@ -32,7 +32,6 @@ class autobuntu::stats::statsd(
   
   service { "statsd":
     ensure => running,
-    enable => true,
-    provider => upstart
+    enable => true
   }
 }
