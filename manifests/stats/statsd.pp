@@ -30,8 +30,20 @@ class autobuntu::stats::statsd(
     notify => Service['statsd']
   }
   
+  group { "statsd":
+    ensure => present
+  }
+  
+  user { "statsd":
+    ensure => present,
+    system => true,
+    gid => "statsd"
+    home => "/opt/statsd"
+  }
+  
   service { "statsd":
     ensure => running,
-    enable => true
+    enable => true,
+    require => User['statsd']
   }
 }
