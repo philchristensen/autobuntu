@@ -4,7 +4,7 @@ class autobuntu::stats::graphite(
 ){
   include apache
   
-  package { ["libcairo2", "libcairo2-dev"]:
+  package { ["libcairo2", "libcairo2-dev", "libffi-dev"]:
     ensure => present
   }->
   
@@ -45,7 +45,7 @@ class autobuntu::stats::graphite(
   
   autobuntu::development::python::pip::package { "graphite-cairo":
     ensure => present,
-    package => "pycairo",
+    package => "cairocffi",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
   }->
   
@@ -89,6 +89,11 @@ class autobuntu::stats::graphite(
     ensure => present,
     package => "graphite-web",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
+  }->
+  
+  file { "/opt/graphite/virtualenv/local/lib/python2.7/site-packages/cairo.py":
+    ensure => file,
+    content => "from cairocffi import *\n"
   }->
   
   file { "graphite-logs":
