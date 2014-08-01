@@ -10,6 +10,10 @@ class autobuntu::stats::statsd(
     group => 'staff'
   }->
   
+  package { "npm":
+    ensure => present
+  }->
+  
   package { "hashring":
     ensure => present,
     provider => 'npm'
