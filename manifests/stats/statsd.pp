@@ -10,6 +10,11 @@ class autobuntu::stats::statsd(
     group => 'staff'
   }->
   
+  package { "hashring":
+    ensure => present,
+    provider => 'npm'
+  }
+  
   autobuntu::development::git::checkout { "statsd":
     url => "https://github.com/etsy/statsd.git",
     path => "/opt/statsd",
