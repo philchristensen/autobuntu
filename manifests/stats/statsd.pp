@@ -2,7 +2,7 @@ class autobuntu::stats::statsd(
   $statsd_conf_source = "puppet:///modules/autobuntu/stats/statsd/config.js",
   $proxy_conf_source = "puppet:///modules/autobuntu/stats/statsd/proxyConfig.js"
 ){
-  include nodejs
+  include autobuntu::development::nodejs
   
   file { "/opt/statsd":
     ensure => directory,
@@ -10,14 +10,10 @@ class autobuntu::stats::statsd(
     group => 'staff'
   }->
   
-  package { "npm":
-    ensure => present
-  }->
-  
   package { "hashring":
     ensure => present,
     provider => 'npm'
-  }
+  }->
   
   autobuntu::development::git::checkout { "statsd":
     url => "https://github.com/etsy/statsd.git",
