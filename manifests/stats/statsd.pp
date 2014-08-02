@@ -10,16 +10,15 @@ class autobuntu::stats::statsd(
     group => 'staff'
   }->
   
-  package { "hashring":
-    ensure => present,
-    provider => 'npm'
-  }->
-  
   autobuntu::development::git::checkout { "statsd":
     url => "https://github.com/etsy/statsd.git",
     path => "/opt/statsd",
     dirname => "current",
     revision => "1590bcf56ea1a3ac167f62fba3d599b65582d5ea"
+  }->
+  
+  nodejs::npm { '/opt/statsd/current:hashring':
+    ensure  => present,
   }->
   
   file { "/opt/statsd/current/config.js":
