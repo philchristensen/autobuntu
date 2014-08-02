@@ -1,8 +1,13 @@
 class autobuntu::development::nodejs {
+  apt::ppa { 'ppa:chris-lea/node.js':
+    before => Class['nodejs']
+  }
+
   include nodejs
   
   package { "npm":
-    ensure => present
+    ensure => present,
+    require => Class['nodejs']
   }
   
   file { "/etc/npmrc":
