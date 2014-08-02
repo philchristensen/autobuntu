@@ -2,7 +2,7 @@ class autobuntu::stats::statsd(
   $statsd_conf_source = "puppet:///modules/autobuntu/stats/statsd/config.js",
   $proxy_conf_source = "puppet:///modules/autobuntu/stats/statsd/proxyConfig.js"
 ){
-  include autobuntu::development::nodejs
+  include autobuntu::development::node
   
   file { "/opt/statsd":
     ensure => directory,
