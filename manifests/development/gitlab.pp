@@ -73,7 +73,7 @@ class autobuntu::development::gitlab(
       owner => "git",
       group => "git",
       mode => "0775",
-      source => "puppet:///modules/autobuntu/development/gitlab/gitconfig.ini",
+      content => template("autobuntu/development/gitlab/gitconfig.ini.erb"),
     }
 
     autobuntu::development::git::checkout { "checkout-gitlab-shell":
