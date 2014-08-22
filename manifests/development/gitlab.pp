@@ -10,6 +10,7 @@ class autobuntu::development::gitlab(
     include apache::mod::proxy_http
     
     apache::mod { "rewrite": }
+    apache::mod { "headers": }
 
     include apt
     apt::key { "E1DF1F24":}->
