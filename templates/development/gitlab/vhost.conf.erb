@@ -8,7 +8,7 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
 <% if ssl == true %>
   SSLEngine on
   SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
-  SSLCertificateKeyFile /etc/ssl/certs/ssl-cert-snakeoil.key
+  SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 
 	ProxyRequests Off
 	<Proxy *>
