@@ -114,19 +114,19 @@ class autobuntu::development::gitlab(
     file { "gitlab-app-config":
       path => "/var/git/gitlab/config/gitlab.yml",
       content => template("autobuntu/development/gitlab/config.yml.erb"),
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
     
     file { "gitlab-database-config":
       path => "/var/git/gitlab/config/database.yml",
       content => template("autobuntu/development/gitlab/database.yml.erb"),
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
     
     file { "gitlab-unicorn-config":
       path => "/var/git/gitlab/config/unicorn.rb",
       source => "puppet:///modules/autobuntu/development/gitlab/unicorn.rb",
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
 
     file { "gitlab-init":
@@ -135,7 +135,7 @@ class autobuntu::development::gitlab(
       owner => "git",
       group => "git",
       mode => "0755",
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
 
     file { "gitlab-log":
@@ -143,7 +143,7 @@ class autobuntu::development::gitlab(
       path => "/var/git/gitlab/log",
       owner => "git",
       mode => "0775",
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
 
     file { "gitlab-tmp":
@@ -151,7 +151,7 @@ class autobuntu::development::gitlab(
       path => "/var/git/gitlab/tmp",
       owner => "git",
       mode => "0775",
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
     
     file { "gitlab-tmp-pids":
@@ -159,7 +159,7 @@ class autobuntu::development::gitlab(
       path => "/var/git/gitlab/tmp/pids",
       owner => "git",
       mode => "0775",
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
     
     file { "gitlab-satellites":
@@ -185,7 +185,7 @@ class autobuntu::development::gitlab(
         "/usr/bin",
         "/bin",
       ],
-      require => Wt::Git::Checkout['checkout-gitlab'],
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
 
     apache::vhost { "${gitlab_hostname}-secure":
