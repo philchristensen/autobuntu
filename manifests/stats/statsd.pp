@@ -19,7 +19,7 @@ class autobuntu::stats::statsd(
   
   nodejs::npm { '/opt/statsd/current:hashring':
     ensure  => present,
-    version => "2.0.1"
+    version => "1.0.1"
   }->
   
   file { "/opt/statsd/current/config.js":
