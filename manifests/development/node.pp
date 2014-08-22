@@ -3,6 +3,10 @@ class autobuntu::development::node {
     manage_repo => true
   }
   
+  package { "nodejs-legacy":
+    ensure => present
+  }
+
   file { "/etc/npmrc":
     ensure => file,
     content => "registry=http://registry.npmjs.org/\n",
