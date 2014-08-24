@@ -150,6 +150,14 @@ class autobuntu::stats::graphite(
     group => 'staff'
   }->
 
+  file { "graphite-carbon-storage-aggregation":
+    ensure => file,
+    path => "/opt/graphite/conf/storage-aggregation.conf",
+    content => template("autobuntu/stats/graphite/storage-aggregation.conf.erb"),
+    owner => 'root',
+    group => 'staff'
+  }->
+
   autobuntu::development::python::django::syncdb { "graphite-syncdb":
     pythonpath => "/opt/graphite/virtualenv/bin/python",
     projectpath => "/opt/graphite/webapp/graphite"
