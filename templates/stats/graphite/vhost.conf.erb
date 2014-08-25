@@ -32,6 +32,10 @@ NameVirtualHost <%= @vhost_name %>:<%= @port %>
     Allow from all
   </Directory>
   
+  Header set Access-Control-Allow-Origin "http://stats.dramonline.net"
+  Header set Access-Control-Allow-Methods "GET, OPTIONS"
+  Header set Access-Control-Allow-Headers "origin, authorization, accept"
+
   WSGIApplicationGroup dramstats
   WSGIProcessGroup dramstats
   WSGIDaemonProcess dramstats display-name=dramstats python-path=/opt/graphite/virtualenv/lib/python2.7/site-packages

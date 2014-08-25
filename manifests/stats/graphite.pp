@@ -150,6 +150,14 @@ class autobuntu::stats::graphite(
     group => 'staff'
   }->
 
+  file { "graphite-carbon-storage-aggregation":
+    ensure => file,
+    path => "/opt/graphite/conf/storage-aggregation.conf",
+    content => template("autobuntu/stats/graphite/storage-aggregation.conf.erb"),
+    owner => 'root',
+    group => 'staff'
+  }->
+
   autobuntu::development::python::django::syncdb { "graphite-syncdb":
     pythonpath => "/opt/graphite/virtualenv/bin/python",
     projectpath => "/opt/graphite/webapp/graphite"
@@ -163,10 +171,10 @@ class autobuntu::stats::graphite(
     group => 'staff'
   }->
   
-  apache::vhost { 'stats.dramonline.net':
+  apache::vhost { "graphite-${environment}.dramonline.net":
     priority => "10",
     vhost_name => $ipaddress,
-    servername => 'stats.dramonline.net',
+    servername => "graphite-${environment}.dramonline.net",
     ssl => false,
     port => "80",
     template => 'autobuntu/stats/graphite/vhost.conf.erb',
