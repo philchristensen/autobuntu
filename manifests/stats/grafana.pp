@@ -22,7 +22,7 @@ class autobuntu::stats::grafana(
   
   file { "/opt/grafana/grafana-${grafana_version}/config.js":
     ensure => file,
-    content => template("wt/grafana/config.js.erb"),
+    content => template("autobuntu/stats/grafana/config.js.erb"),
     owner => 'root',
     group => 'staff',
     mode => '0755'
