@@ -171,10 +171,10 @@ class autobuntu::stats::graphite(
     group => 'staff'
   }->
   
-  apache::vhost { 'graphite.dramonline.net':
+  apache::vhost { "graphite-${environment}.dramonline.net":
     priority => "10",
     vhost_name => $ipaddress,
-    servername => 'graphite.dramonline.net',
+    servername => "graphite-${environment}.dramonline.net",
     ssl => false,
     port => "80",
     template => 'autobuntu/stats/graphite/vhost.conf.erb',
