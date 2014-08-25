@@ -116,13 +116,13 @@ production: &base
   # You can inspect a sample of the LDAP users with login access by running:
   #   bundle exec rake gitlab:ldap:check RAILS_ENV=production
   ldap:
-    enabled: false
-    host: ''
-    port: 636
-    uid: 'uid'
-    method: 'ssl' # "tls" or "ssl" or "plain"
-    bind_dn: ''
-    password: ''
+    enabled: true
+    host: 'logicops.logicworks.net'
+    port: 389
+    uid: 'cn'
+    method: 'plain' # "tls" or "ssl" or "plain"
+    bind_dn: 'cn=ldapadmin,ou=People,dc=logicworks,dc=net'
+    password: 'ldapadmin'
     # If allow_username_or_email_login is enabled, GitLab will ignore everything
     # after the first '@' in the LDAP username submitted by the user on login.
     #
@@ -138,7 +138,7 @@ production: &base
     #
     #   Ex. ou=People,dc=gitlab,dc=example
     #
-    base: ''
+    base: 'ou=People,dc=logicworks,dc=net'
 
     # Filter LDAP users
     #
