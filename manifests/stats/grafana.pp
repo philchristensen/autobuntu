@@ -16,6 +16,7 @@ class autobuntu::stats::grafana(
   staging::deploy { "grafana-${grafana_version}.tar.gz":
     source => "http://grafanarel.s3.amazonaws.com/grafana-${grafana_version}.tar.gz",
     target => "/opt/grafana",
+    creates => "/opt/grafana/grafana-${grafana_version}/index.html",
     user => 'root',
     group => 'staff'
   }
