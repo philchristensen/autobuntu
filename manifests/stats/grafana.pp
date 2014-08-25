@@ -34,7 +34,7 @@ class autobuntu::stats::grafana(
     servername => $grafana_hostname,
     ssl => false,
     port => "80",
-    template => 'wt/grafana/vhost.conf.erb',
+    template => 'autobuntu/stats/grafana/vhost.conf.erb',
     docroot => "/opt/grafana/grafana-${grafana_version}",
     notify => Service['apache2']
   }
