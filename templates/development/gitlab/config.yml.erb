@@ -52,7 +52,7 @@ production: &base
     ## Standard login settings
     # The standard login can be disabled to force login via LDAP
     # default: true - If set to false the standard login form won't be shown on the sign-in page
-    signin_enabled: false
+    signin_enabled: true
 
     # Restrict setting visibility levels for non-admin users.
     # The default is to allow all levels.
@@ -116,13 +116,13 @@ production: &base
   # You can inspect a sample of the LDAP users with login access by running:
   #   bundle exec rake gitlab:ldap:check RAILS_ENV=production
   ldap:
-    enabled: true
-    host: 'logicops.logicworks.net'
+    enabled: false
+    host: ''
     port: 389
-    uid: 'cn'
+    uid: 'uid'
     method: 'plain' # "tls" or "ssl" or "plain"
-    bind_dn: 'cn=ldapadmin,o=logicworks.net'
-    password: 'ldapadmin'
+    bind_dn: ''
+    password: ''
     # If allow_username_or_email_login is enabled, GitLab will ignore everything
     # after the first '@' in the LDAP username submitted by the user on login.
     #
@@ -138,7 +138,7 @@ production: &base
     #
     #   Ex. ou=People,dc=gitlab,dc=example
     #
-    base: 'o=logicworks.net'
+    base: 'o=example.com'
 
     # Filter LDAP users
     #
