@@ -121,7 +121,7 @@ production: &base
     port: 389
     uid: 'cn'
     method: 'plain' # "tls" or "ssl" or "plain"
-    bind_dn: 'cn=ldapadmin,ou=People,o=logicworks.net'
+    bind_dn: 'cn=ldapadmin,o=logicworks.net'
     password: 'ldapadmin'
     # If allow_username_or_email_login is enabled, GitLab will ignore everything
     # after the first '@' in the LDAP username submitted by the user on login.
@@ -138,7 +138,7 @@ production: &base
     #
     #   Ex. ou=People,dc=gitlab,dc=example
     #
-    base: 'ou=People,o=logicworks.net'
+    base: 'o=logicworks.net'
 
     # Filter LDAP users
     #
