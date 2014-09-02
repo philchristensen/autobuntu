@@ -99,7 +99,6 @@ class autobuntu::stats::graphite(
   file { "graphite-logs":
     ensure => directory,
     path => "/opt/graphite/storage",
-    recurse => true,
     owner => 'www-data',
     group => 'staff'
   }->
