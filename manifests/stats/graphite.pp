@@ -96,9 +96,10 @@ class autobuntu::stats::graphite(
     content => "from cairocffi import *\n"
   }->
   
-  file { "graphite-logs":
+  file { ["/opt/graphite/storage",
+          "/opt/graphite/storage/log",
+          "/opt/graphite/storage/log/webapp"]:
     ensure => directory,
-    path => "/opt/graphite/storage",
     owner => 'www-data',
     group => 'staff'
   }->
