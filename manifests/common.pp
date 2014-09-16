@@ -1,5 +1,8 @@
 # Standard resources to be installed on *every* machine managed by Puppet.
-class autobuntu::common {
+class autobuntu::common(
+  $bash_prompt_label = '',
+  $postfix_rootmail_recipient = nil
+){
   tag('provisioning')
 
   require autobuntu::system::apt
@@ -9,7 +12,9 @@ class autobuntu::common {
   require autobuntu::system::ssh
   
   include autobuntu::system::motd
-  include autobuntu::apps::bash
+  class { 'autobuntu::apps::bash':
+    prompt_label => $bash_prompt_label
+  }
   
   # standard packages
   package { ["libaugeas-ruby", "augeas-tools", "logrotate", "sysstat", "tree",
@@ -33,7 +38,9 @@ class autobuntu::common {
 
   include autobuntu::apps::tmpreaper
   include autobuntu::apps::ntp
-  include autobuntu::apps::postfix
+  class { 'autobuntu::apps::postfix':
+    rootmail_recipient => $postfix_rootmail_recipient
+  }
 
   include autobuntu::development::python
 }
