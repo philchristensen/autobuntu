@@ -3,8 +3,10 @@ class autobuntu::development::node {
     manage_repo => true
   }
   
-  package { "nodejs-legacy":
-    ensure => present
+  if($lsbdistcodename == 'trusty'){
+    package { "nodejs-legacy":
+      ensure => present
+    }
   }
 
   file { "/etc/npmrc":
