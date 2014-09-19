@@ -175,6 +175,7 @@ class autobuntu::stats::graphite(
     priority => "10",
     vhost_name => $ipaddress,
     servername => "graphite-${environment}.dramonline.net",
+    serveraliases => [],
     ssl => false,
     port => "80",
     template => 'autobuntu/stats/graphite/vhost.conf.erb',
