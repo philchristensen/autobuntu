@@ -33,6 +33,7 @@ class autobuntu::stats::grafana(
     priority => "10",
     vhost_name => $ipaddress,
     servername => $grafana_hostname,
+    serveraliases => [],
     ssl => false,
     port => "80",
     template => 'autobuntu/stats/grafana/vhost.conf.erb',
