@@ -4,7 +4,8 @@ module Puppet::Parser::Functions
     fqdn = lookupvar('fqdn')
     match = fqdn.match(/^(\w+)(\d+)\-([^.]+)\.(.*)$/i)
     if ! match
-      fail("Can't determine xaz_host for #{fqdn}, not of the form typeN-env.example.com")
+      err("Can't determine xaz_host for #{fqdn}, not of the form typeN-env.example.com")
+      return nil
     end
     t, i, e, d = match.captures
     type = type || t

@@ -21,9 +21,10 @@ module Puppet::Parser::Functions
     }
     
     if(xaz_instances.empty?)
-      fail("There aren't any suitable instances in your AutoScaling Group.")
+      err("There aren't any suitable instances in your AutoScaling Group.")
+      return nil
     end
 
-    xaz_instances.sample
+    return xaz_instances.sample
   end
 end
