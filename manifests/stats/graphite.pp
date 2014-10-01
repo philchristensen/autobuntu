@@ -157,7 +157,7 @@ class autobuntu::stats::graphite(
     content => template("autobuntu/stats/graphite/storage-aggregation.conf.erb"),
     owner => 'root',
     group => 'staff'
-  }->
+  }
 
   if($settings_class != nil){
     class { $local_settings_class:
