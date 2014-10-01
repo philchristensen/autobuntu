@@ -6,25 +6,17 @@ module Puppet::Parser::Functions
     current_az = lookupvar('ec2_placement_availability_zone')
     
     Aws.config[:credentials] = Aws::InstanceProfileCredentials.new
-    Aws.config[:region] = current_az.slice(0, -2)
-    
+    Aws.config[:region] = current_az[0,current_az.length-1]
+
     client = Aws::AutoScaling::Client.new
     response = client.describe_auto_scaling_instances
-    
-    xaz_instances = response.auto_scaling_instances.reject { |i|
-      if i.health_status == "Unhealthy"
-        return true
-      elsif i.availability_zone == current_az
-        return true
-      elsif i.auto_scaling_group_name.start_with?(asg_prefix)
-        return true
-    }
-    
-    if(xaz_instances.empty?)
-      err("There aren't any suitable instances in your AutoScaling Group.")
-      return nil
-    end
 
+    xaz_instances = response.auto_scaling_instances.delete_if do |i|
+      i.health_status == "unhealthy"
+      || i.availability_zone == current_az
+      || ! i.auto_scaling_group_name.start_with?(asg_prefix)
+    end
+    
     return xaz_instances.sample
   end
 end
