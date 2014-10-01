@@ -1,6 +1,7 @@
 class autobuntu::stats::graphite(
   $carbon_conf_source = "puppet:///modules/autobuntu/stats/graphite/carbon.conf",
-  $relay_rules_source = "puppet:///modules/autobuntu/stats/graphite/relay-rules.conf"
+  $relay_rules_source = "puppet:///modules/autobuntu/stats/graphite/relay-rules.conf",
+  $local_settings_class = nil
 ){
   include apache
   
@@ -89,7 +90,7 @@ class autobuntu::stats::graphite(
     ensure => present,
     package => "graphite-web",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
+  }
   
   file { "/opt/graphite/virtualenv/local/lib/python2.7/site-packages/cairo.py":
     ensure => file,
@@ -157,6 +158,12 @@ class autobuntu::stats::graphite(
     owner => 'root',
     group => 'staff'
   }->
+
+  if($settings_class != nil){
+    class { $local_settings_class:
+      before => Autobuntu::Development::Python::Django::Syncdb['graphite-syncdb']
+    }
+  }
 
   autobuntu::development::python::django::syncdb { "graphite-syncdb":
     pythonpath => "/opt/graphite/virtualenv/bin/python",
