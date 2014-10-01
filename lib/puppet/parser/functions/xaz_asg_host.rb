@@ -3,6 +3,8 @@ require 'aws-sdk'
 
 module Puppet::Parser::Functions
   newfunction(:xaz_asg_host, :type => :rvalue) do |asg_prefix, domain|
+    current_az = lookupvar('ec2_placement_availability_zone')
+    
     Aws.config[:credentials] = Aws::InstanceProfileCredentials.new
     Aws.config[:region] = current_az[0,current_az.length-1]
 
