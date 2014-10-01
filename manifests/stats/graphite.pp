@@ -159,7 +159,7 @@ class autobuntu::stats::graphite(
     group => 'staff'
   }
 
-  if($settings_class != nil){
+  if($local_settings_class != nil){
     class { $local_settings_class:
       before => Autobuntu::Development::Python::Django::Syncdb['graphite-syncdb']
     }
