@@ -1,3 +1,10 @@
+class autobuntu::development::python::pip {
+  file { ["/var/cache/pip",
+          "/var/cache/pip/requirements"]:
+    ensure => directory
+  }
+}
+
 define autobuntu::development::python::pip::package(
   $package = $name,
   $ensure = "present",
@@ -72,12 +79,9 @@ define autobuntu::development::python::pip::requirements(
   } else {
     $pip_cache_switch = ''
   }
-  
-  file { ["/var/cache/pip",
-          "/var/cache/pip/reqhash"]:
-    ensure => directory
-  }
-  
+
+  include autobuntu::development::python::pip
+
   case $ensure {
     'present': {
       $reqhash = md5($requirements)
