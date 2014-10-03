@@ -32,10 +32,7 @@ class autobuntu::stats::statsd(
     environment => "HOME=/opt/statsd",
     user => "statsd",
     cwd => "/opt/statsd/current",
-    require => [
-      Class['nodejs'],
-      File['/opt/statsd/node_modules']
-    ]
+    require => Class['nodejs']
   }->
   
   file { "/opt/statsd/current/config.js":
