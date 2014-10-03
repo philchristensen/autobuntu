@@ -1,4 +1,5 @@
 class autobuntu::development::python::pip {
+  tag('provisioning')
   file { ["/var/cache/pip",
           "/var/cache/pip/requirements"]:
     ensure => directory
