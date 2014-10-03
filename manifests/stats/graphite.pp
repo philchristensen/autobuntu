@@ -123,7 +123,7 @@ class autobuntu::stats::graphite(
 
   if($local_settings_class != nil){
     class { $local_settings_class:
-      before => Autobuntu::Development::Python::Django::Syncdb['graphite-syncdb']
+      before => Exec['graphite-syncdb']
     }
   }
 
