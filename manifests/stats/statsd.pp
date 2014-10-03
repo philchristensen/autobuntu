@@ -29,7 +29,7 @@ class autobuntu::stats::statsd(
   exec { "npm-install-hashring":
     command => "/usr/bin/npm install hashring@1.0.1",
     unless => "/usr/bin/npm list -p -l | /bin/grep '/opt/statsd/current/node_modules/hashring:hashring@1.0.1'",
-    env => "HOME=/opt/statsd",
+    environment => "HOME=/opt/statsd",
     user => "statsd",
     cwd => "/opt/statsd/current",
     require => [
