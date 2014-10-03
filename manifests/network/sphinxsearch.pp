@@ -3,10 +3,11 @@ class autobuntu::network::sphinxsearch {
   
   package { "sphinxsearch":
     ensure => present
-  }->
+  }
   
   service { "sphinxsearch":
     ensure => running,
-    enable => true
+    enable => true,
+    require => Package["sphinxsearch"]
   }
 }
