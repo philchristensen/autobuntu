@@ -1,5 +1,5 @@
 define autobuntu::development::python::pip::package(
-  $package = $name,
+  $package,
   $ensure = "present",
   $index_url = nil,
   $pip_cache_dir = nil,
