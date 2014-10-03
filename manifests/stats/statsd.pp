@@ -17,9 +17,25 @@ class autobuntu::stats::statsd(
     revision => "1590bcf56ea1a3ac167f62fba3d599b65582d5ea"
   }->
   
-  nodejs::npm { '/opt/statsd/current:hashring':
-    ensure  => present,
-    version => "1.0.1"
+  file { ["/opt/statsd/current/node_modules",
+          "/opt/statsd/.npm",
+          "/opt/statsd/.node-gyp"]:
+    ensure => directory,
+    owner => 'statsd',
+    group => 'statsd',
+    mode => '0755'
+  }->
+  
+  exec { "npm-install-hashring":
+    command => "/usr/bin/npm install hashring@1.0.1",
+    unless => "/usr/bin/npm list -p -l | /bin/grep '/opt/statsd/current/node_modules/hashring:hashring@1.0.1'",
+    env => "HOME=/opt/statsd",
+    user => "statsd",
+    cwd => "/opt/statsd/current",
+    require => [
+      Class['nodejs'],
+      File['/opt/statsd/node_modules']
+    ]
   }->
   
   file { "/opt/statsd/current/config.js":
