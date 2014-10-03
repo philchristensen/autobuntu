@@ -128,7 +128,7 @@ class autobuntu::stats::graphite(
   }
 
   exec { "graphite-syncdb":
-    command => "python manage.py syncdb --noinput && date > .syncdb-ran",
+    command => "python manage.py syncdb --noinput && /bin/date > .syncdb-ran",
     path => "/opt/graphite/virtualenv/bin",
     cwd => "/opt/graphite/webapp/graphite",
     creates => "/opt/graphite/webapp/graphite/.syncdb-ran"
