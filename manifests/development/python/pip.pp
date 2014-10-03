@@ -95,9 +95,9 @@ define autobuntu::development::python::pip::requirements(
       }
       
       exec { "pip-install-requirements-${name}-md5":
-        command => "/usr/bin/md5sum ${requirements} > /opt/wt-pip/requirements-${reqhash}.txt.md5",
+        command => "/usr/bin/md5sum ${requirements} > /var/cache/pip/requirements/${reqhash}.txt.md5",
         refreshonly => true,
-        require => File["/opt/wt-pip"]
+        require => File["/var/cache/pip/requirements"]
       }
     }
     'latest': {
