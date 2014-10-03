@@ -20,81 +20,43 @@ class autobuntu::stats::graphite(
     location => "/opt/graphite"
   }->
   
-  autobuntu::development::python::pip::package { "graphite-setuptools-git":
-    ensure => present,
-    package => "setuptools-git",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-
-  autobuntu::development::python::pip::package { "graphite-ceres":
-    ensure => present,
-    package => "https://github.com/graphite-project/ceres/tarball/master",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-whisper":
-    ensure => present,
-    package => "whisper",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-carbon":
-    ensure => present,
-    package => "carbon",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-cairo":
-    ensure => present,
-    package => "cairocffi",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
+  file { "/opt/graphite/requirements.txt":
+    ensure => file,
+    content => join([
+      "-e git://github.com/mozilla/elasticutils.git#egg=ceres",
+      "Django==1.5.8",
+      "MySQL-python==1.2.5",
+      "Twisted==11.0.1",
+      "argparse==1.2.1",
+      "cairocffi==0.6",
+      "cffi==0.8.6",
+      "distribute==0.6.24",
+      "django-tagging==0.3.2",
+      "pycparser==2.10",
+      "setuptools-git==1.1",
+      "txAMQP==0.6.2",
+      "whisper==0.9.12",
+      "wsgiref==0.1.2",
+      "zope.interface==4.1.1"
+    ], "\n"),
+    owner => 'root',
+    group => 'staff'
   }->
   
-  autobuntu::development::python::pip::package { "graphite-zope-interface":
+  autobuntu::development::python::pip::requirements { "graphite-requirements":
     ensure => present,
-    package => "zope.interface",
     pip_path => "/opt/graphite/virtualenv/bin/pip",
+    requirements => "/opt/graphite/requirements.txt"
   }->
-  
-  autobuntu::development::python::pip::package { "graphite-twisted":
-    ensure => "11.1.0",
-    package => "twisted",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-txamqp":
-    ensure => present,
-    package => "txamqp",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-mysqldb":
-    ensure => present,
-    package => "mysql-python",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-django":
-    ensure => "1.5.8",
-    package => "django",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-django-tagging":
-    ensure => present,
-    package => "django-tagging",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }->
-  
-  autobuntu::development::python::pip::package { "graphite-web":
-    ensure => present,
-    package => "graphite-web",
-    pip_path => "/opt/graphite/virtualenv/bin/pip",
-  }
   
   file { "/opt/graphite/virtualenv/local/lib/python2.7/site-packages/cairo.py":
     ensure => file,
     content => "from cairocffi import *\n"
+  }->
+  
+  exec { "install-graphite":
+    command => "/opt/graphite/virtualenv/bin/pip install graphite-web",
+    creates => "/opt/graphite/webapp"
   }->
   
   file { ["/opt/graphite/storage",
