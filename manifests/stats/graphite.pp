@@ -26,7 +26,7 @@ class autobuntu::stats::graphite(
       "-e git://github.com/mozilla/elasticutils.git#egg=ceres",
       "Django==1.5.8",
       "MySQL-python==1.2.5",
-      "Twisted==11.0.1",
+      "Twisted==11.1.0",
       "argparse==1.2.1",
       "cairocffi==0.6",
       "cffi==0.8.6",
