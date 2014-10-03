@@ -127,10 +127,12 @@ class autobuntu::stats::graphite(
     }
   }
 
-  autobuntu::development::python::django::syncdb { "graphite-syncdb":
-    pythonpath => "/opt/graphite/virtualenv/bin/python",
-    projectpath => "/opt/graphite/webapp/graphite"
-  }->
+  exec { "graphite-syncdb":
+    command => "python manage.py syncdb --noinput && date > syncdb-ran",
+    path => "/opt/graphite/virtualenv/bin",
+    cwd => "/opt/graphite/current",
+    creates => "/opt/graphite/current/syncdb-ran"
+  }
   
   file { "graphite-wsgi":
     ensure => file,

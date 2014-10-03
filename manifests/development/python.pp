@@ -12,8 +12,13 @@ class autobuntu::development::python {
     require => Package["python-pip"]
   }
   
+  schedule { "distribute-updates":
+    period => weekly
+  }
+  
   autobuntu::development::python::pip::package { "distribute":
     ensure => latest,
+    schedule => "distribute-updates",
     package => "distribute",
     pip_path => '/usr/bin/env pip'
   }
