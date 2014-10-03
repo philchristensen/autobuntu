@@ -1,17 +1,17 @@
 define autobuntu::development::python::pip::package(
-  $package,
+  $package = $name,
   $ensure = "present",
   $index_url = nil,
   $pip_cache_dir = nil,
   $pip_path
 ){
   if($index_url != nil){
-    $index_url_switch = "--index-url=${index_url}"
+    $index_url_switch = "--use-mirrors --index-url=${index_url}"
   }
   else {
-    $index_url_switch = ''
+    $index_url_switch = '--use-mirrors'
   }
-
+  
   if ($pip_cache_dir != nil){
     ## ensure it exists if it's provided..
     ## you're on your own to create it.
@@ -67,19 +67,33 @@ define autobuntu::development::python::pip::requirements(
   }
 
   if ($pip_cache_dir != nil){
-    ## ensure it exists if it's provided..
-    ## you're on your own to create it.
     validate_absolute_path($pip_cache_dir)
     $pip_cache_switch = "--download-cache ${pip_cache_dir}"
   } else {
     $pip_cache_switch = ''
   }
   
+  file { ["/var/cache/pip",
+          "/var/cache/pip/reqhash"]:
+    ensure => directory
+  }
+  
   case $ensure {
     'present': {
+      $reqhash = md5($requirements)
+      $hashpath = "/var/cache/pip/requirements/${reqhash}.txt.md5"
       exec { "pip-install-requirements-${name}":
         command => "${pip_path} install ${pip_cache_switch} ${index_url_switch} -r ${requirements}",
-        timeout => 0
+        unless => "test -f ${hashpath} && test \"$(md5sum ${requirements})\" != \"$(cat ${hashpath})\"",
+        path => "/usr/bin",
+        timeout => 0,
+        notify => Exec["pip-install-requirements-${name}-md5"]
+      }
+      
+      exec { "pip-install-requirements-${name}-md5":
+        command => "/usr/bin/md5sum ${requirements} > /opt/wt-pip/requirements-${reqhash}.txt.md5",
+        refreshonly => true,
+        require => File["/opt/wt-pip"]
       }
     }
     'latest': {
