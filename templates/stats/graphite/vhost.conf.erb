@@ -32,14 +32,14 @@ NameVirtualHost <%= @vhost_name %>:<%= @port %>
     Allow from all
   </Directory>
   
-  Header set Access-Control-Allow-Origin "http://stats.dramonline.net"
+  Header set Access-Control-Allow-Origin "*"
   Header set Access-Control-Allow-Methods "GET, OPTIONS"
   Header set Access-Control-Allow-Headers "origin, authorization, accept"
 
-  WSGIApplicationGroup dramstats
-  WSGIProcessGroup dramstats
-  WSGIDaemonProcess dramstats display-name=dramstats python-path=/opt/graphite/virtualenv/lib/python2.7/site-packages
-  WSGIImportScript /opt/graphite/conf/graphite.wsgi.py application-group=dramstats process-group=dramstats
+  WSGIApplicationGroup graphite
+  WSGIProcessGroup graphite
+  WSGIDaemonProcess graphite display-name=graphite python-path=/opt/graphite/virtualenv/lib/python2.7/site-packages
+  WSGIImportScript /opt/graphite/conf/graphite.wsgi.py application-group=graphite process-group=graphite
   WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi.py
 
   ErrorLog <%= @logroot %>/<%= @name %>_error.log

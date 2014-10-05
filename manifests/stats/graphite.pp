@@ -1,6 +1,7 @@
 class autobuntu::stats::graphite(
   $carbon_conf_source = "puppet:///modules/autobuntu/stats/graphite/carbon.conf",
   $relay_rules_source = "puppet:///modules/autobuntu/stats/graphite/relay-rules.conf",
+  $vhost_template = 'autobuntu/stats/graphite/vhost.conf.erb',
   $local_settings_class = nil
 ){
   include apache
@@ -149,7 +150,7 @@ class autobuntu::stats::graphite(
     serveraliases => [],
     ssl => false,
     port => "80",
-    template => 'autobuntu/stats/graphite/vhost.conf.erb',
+    template => $vhost_template,
     docroot => "/var/www/"
   }
   
