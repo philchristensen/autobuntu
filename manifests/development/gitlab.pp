@@ -22,7 +22,7 @@ class autobuntu::development::gitlab(
 
     package { ['libaugeas-ruby1.9.1', 'build-essential', 'zlib1g-dev', 'libyaml-dev', 'libssl-dev', 'libgdbm-dev', 'libreadline-dev', 'libncurses5-dev',
                 'libffi-dev', 'git-core', 'openssh-server', 'redis-server', 'checkinstall', 'libxml2-dev', 'libpq-dev', 
-                'libxslt-dev', 'libcurl4-openssl-dev', 'libicu-dev', 'python-docutils']:
+                'libxslt-dev', 'libcurl4-openssl-dev', 'libicu-dev', 'python-docutils', 'pkg-config', 'cmake']:
       ensure => present,
       require => Package['ruby1.9.3']
     }
@@ -84,7 +84,7 @@ class autobuntu::development::gitlab(
       group => "git",
       url => "https://github.com/gitlabhq/gitlab-shell.git",
       branch => "master",
-      revision => 'ca425566d0266a1786019153757e283d7d246450', #v1.9.6',
+      revision => 'a3b54457b1cd188981d4d0775fc7acf2fd6aa128', #v2.0.1
       manage_working_dir => false,
       notify => Service[httpd],
       require => User["git"]
@@ -103,8 +103,8 @@ class autobuntu::development::gitlab(
       path => "/var/git",
       url => "https://github.com/gitlabhq/gitlabhq.git",
       # note that you want both the branch and the revision
-      branch => '7-1-stable',
-      revision => "facfec4b242ce151af224e20715d58e628aa5e74",
+      branch => '7-3-stable',
+      revision => "f092e53ee943aaf19b5febfca3ba8d3860ae1700", #v7.3.2
       manage_working_dir => false,
       owner => "git",
       group => "git",
@@ -127,6 +127,12 @@ class autobuntu::development::gitlab(
     file { "gitlab-unicorn-config":
       path => "/var/git/gitlab/config/unicorn.rb",
       source => "puppet:///modules/autobuntu/development/gitlab/unicorn.rb",
+      require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
+    }
+
+    file { "gitlab-rack_attack-config":
+      path => "/var/git/gitlab/config/initializers/rack_attack.rb",
+      source => "/var/git/gitlab/config/initializers/rack_attack.rb.example",
       require => Autobuntu::Development::Git::Checkout['checkout-gitlab'],
     }
 
